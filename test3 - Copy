@@ -203,7 +203,7 @@ class rentcalc():
     def calculateRent(self):
         bookinkart = []
 
-        session = raw_input(" enter yes to star session no to end session: ")
+        session = raw_input(" enter yes to start session no to end session: ")
 
         if session == "yes":
             temp = 1
