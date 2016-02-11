@@ -1,0 +1,326 @@
+import MySQLdb
+class shop():
+
+    newCategoryList = []
+    booktype = []
+    
+    # add or remove with check if category already exist
+    def checkifcategoryexists(self,bookcat):
+        dbConn = MySQLdb.connect("localhost","root","","test") or die ("could not connect to database")
+        cursor = dbConn.cursor()
+        cursor.execute("select * from book")
+        data = cursor.fetchall()
+        for row in data :
+            booktype = unicode(row[1])
+            
+        dbConn.commit()
+        cursor.close()
+#        if bookcat in booktype:
+#            print "Category found"
+            #break
+        return booktype
+
+    def getbookcategories(self):
+        dbConn = MySQLdb.connect("localhost","root","","test") or die ("could not connect to database")
+        cursor = dbConn.cursor()
+        cursor.execute("select * from book")
+        data = cursor.fetchall()
+        for row in data :
+            booktype = unicode(row[1])
+            print booktype
+            
+        dbConn.commit()
+        cursor.close()
+        return booktype
+        
+    def addnewbook(self):
+        dbConn = MySQLdb.connect("localhost","root","","test") or die ("could not connect to database")
+        cursor = dbConn.cursor()
+
+        for i in range(0,6):
+
+            self.newCategoryList.append(raw_input("Enter the values of new category according to the sequence bookType, bookPrice, bookMinimumDays, bookPriceUnderMinimumdays, bookInitialDays and bookPriceforInitialDays : "))
+
+        bookType = self.newCategoryList[0]
+        bookPrice = self.newCategoryList[1]
+        bookMinimumDays = self.newCategoryList[2] 
+        bookPriceUnderMinimumdays = self.newCategoryList[3]
+        bookInitialDays = self.newCategoryList[4]
+        bookPriceforInitialDays = self.newCategoryList[5]
+        checkstring="INSERT into book (bookType,bookPrice,bookMinimumDays,bookPriceUnderMinimumdays,bookInitialDays,bookPriceforInitialDays) values ('"+bookType+"',"+bookPrice+","+bookMinimumDays+","+bookPriceUnderMinimumdays+","+bookInitialDays+","+bookPriceforInitialDays+")"
+        print checkstring
+        cursor.execute(checkstring)
+        dbConn.commit()
+        cursor.close()
+        return booktype
+        
+    def deleteBookCategory(self, deletebook):
+        dbConn = MySQLdb.connect("localhost","root","","test") or die ("could not connect to database")
+        cursor = dbConn.cursor()
+
+
+            
+        cursor.execute("DELETE FROM %s WHERE bookType LIKE '%s'" %'"+deletebook+"')
+        dbConn.commit()
+        cursor.close()
+        return booktype
+        
+    
+
+        
+
+class book():
+#    bookType = ""
+#    bookcat = 0
+#    bookDuration = 0
+    varbookDuration = 0
+#    bookPrice = 0.0
+#    bookMinimumDays = 0
+    varbookMinimumDays = 0
+#    bookPriceUnderMinimumdays = 0.0
+    varbookPriceUnderMinimumdays = 0.0
+#    bookInitialDays = 0
+    varbookInitialDays = 0
+#    bookPriceforInitialDays = 0.0
+    varbookPriceforInitialDays = 0.0
+
+
+
+    def setbookType(self, bookcat):
+        return self.bookcat
+    
+    def getbookType(self):
+        return self.bookcat
+    
+    def setbookDuration(self, ab):
+        bookDuration = ab
+        print ab
+        self.varbookDuration = int(ab)
+        return bookDuration
+    
+    def getbookDuration(self):
+        return self.varbookDuration
+        
+
+        
+    def setbookPrice(self, bookcat):
+        dbConn = MySQLdb.connect("localhost","root","","test") or die ("could not connect to database")
+        cursor = dbConn.cursor()
+        cursor.execute ("select bookPrice from book where bookType='"+bookcat+"'")
+        data = cursor.fetchall()
+
+        for row in data :
+            bookPrice = int(row[0])
+        dbConn.commit()
+        cursor.close()
+        
+        self.varbookPrice = bookPrice
+        return bookPrice
+
+            
+    def getbookPrice(self):
+        return self.varbookPrice
+
+
+    def setbookMinimumDays(self, bookcat):
+#        bookMinimumDays = 0
+        dbConn = MySQLdb.connect("localhost","root","","test") or die ("could not connect to database")
+        cursor = dbConn.cursor()
+        cursor.execute ("select bookMinimumDays from book where bookType='"+bookcat+"'")
+
+        data = cursor.fetchall()
+        for row in data :
+            bookMinimumDays = int(row[0])
+
+        dbConn.commit()
+        cursor.close()
+        self.varbookMinimumDays = bookMinimumDays
+        return bookMinimumDays
+            
+    def getbookMinimumDays(self):
+        return self.varbookMinimumDays
+
+    def setbookPriceUnderMinimumDays(self, bookcat):
+        dbConn = MySQLdb.connect("localhost","root","","test") or die ("could not connect to database")
+        cursor = dbConn.cursor()
+        cursor.execute ("select bookPriceUnderMinimumDays from book where bookType='"+bookcat+"'")
+
+        data = cursor.fetchall()
+        for row in data :
+            bookPriceUnderMinimumDays = int(row[0])
+
+        dbConn.commit()
+        cursor.close()
+        self.varbookPriceUnderMinimumDays = bookPriceUnderMinimumDays
+        return bookPriceUnderMinimumDays
+
+    def getbookPriceUnderMinimumDays(self):
+        return self.varbookPriceUnderMinimumDays
+
+    def setbookInitialDays(self, bookcat):
+
+        dbConn = MySQLdb.connect("localhost","root","","test") or die ("could not connect to database")
+        cursor = dbConn.cursor()
+        cursor.execute ("select bookInitialDays from book where bookType='"+bookcat+"'")
+
+        data = cursor.fetchall()
+        for row in data :
+            bookInitialDays = int(row[0])
+
+        dbConn.commit()
+        cursor.close()
+        self.varbookInitialDays = bookInitialDays
+        return bookInitialDays
+
+
+
+    def getbookInitialDays(self):
+        return self.varbookInitialDays
+
+    def setbookPriceForInitialDays(self, bookcat):
+        dbConn = MySQLdb.connect("localhost","root","","test") or die ("could not connect to database")
+        cursor = dbConn.cursor()
+        cursor.execute ("select bookPriceForInitialDays from book where bookType='"+bookcat+"'")
+
+        data = cursor.fetchall()
+        for row in data :
+            bookPriceForInitialDays = int(row[0])
+
+        dbConn.commit()
+        cursor.close()
+        self.varbookPriceForInitialDays = bookPriceForInitialDays
+        return bookPriceForInitialDays
+                       
+    def getbookPriceForInitialDays(self):
+        return self.varbookPriceForInitialDays
+            
+                      
+
+class rentcalc():
+
+    def __init__(self):
+        print "Welcome to rent calculator"
+    def calculateRent(self):
+        bookinkart = []
+
+        session = raw_input(" enter yes to star session no to end session: ")
+
+        if session == "yes":
+            temp = 1
+            result = 0
+            while(temp):
+
+                separatedays = []
+
+            
+                print "categories of book are"
+
+                shopobj = shop()
+                categorieslist = shopobj.getbookcategories()
+
+                
+            
+                bookcat = raw_input("Enter the category of book, for exit press $: ")
+ #               print bookcat
+
+#                bookcat = "fiction"
+                if bookcat == "$":
+                    print "exiting"
+                    break
+
+                shopObj = shop()
+                shopObj.checkifcategoryexists(bookcat)
+            
+
+                if not shopObj.checkifcategoryexists(bookcat):
+                    print "wrong category"
+                    continue
+                
+                else:
+
+                    bookcount = input("Enter no of books of this category: ")
+        
+                    for i in range(0,bookcount): 
+                        ab = raw_input("Enter the no. of days: ")
+                
+                        bookObj =  book()
+                     
+
+                        bookObj.setbookDuration(ab)
+
+                        bookObj.setbookPrice(bookcat)
+
+                        bookObj.setbookMinimumDays(bookcat)
+                        bookObj.setbookPriceUnderMinimumDays(bookcat)
+                        bookObj.setbookInitialDays(bookcat)
+                        bookObj.setbookPriceForInitialDays(bookcat)
+
+
+
+
+
+
+                        durationWiseCalculator = 0
+#                        rent1 = 0
+                        days = 0
+                        price = 0
+                        initialRent = 0.0
+                        normalPrice = 0.0
+                        initialDays = 0.0
+
+                        duration = bookObj.getbookDuration()
+                        print duration
+                        days = bookObj.getbookMinimumDays()
+                        print days
+                        price = bookObj.getbookPriceUnderMinimumDays()
+                        print price
+                        initialDays = bookObj.getbookInitialDays()
+                        normalPrice = bookObj.getbookPrice()
+                        initialRent = bookObj.getbookPriceForInitialDays()
+
+
+                        durationWiseCalculator = bookObj.getbookDuration()
+
+
+            
+                        if durationWiseCalculator<days:
+                            rent1 = 0
+                            print "less than intial days"
+
+                            rent1 = durationWiseCalculator * price
+
+                
+                        if durationWiseCalculator>=days:
+                            rent1 = 0
+                            print "book worm"
+
+        
+                            val =  durationWiseCalculator - initialDays
+
+                            ab = val * normalPrice
+                            bc = initialDays * initialRent
+
+                            rent1 = ab + bc
+
+                        
+                        result += rent1
+                        print result
+
+        #return result 
+
+
+rentObj= rentcalc()
+ccc = rentObj.calculateRent()
+#print ccc
+
+
+
+    
+
+
+    
+
+            
+          
+        
+        
