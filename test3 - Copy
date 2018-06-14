@@ -1,6 +1,6 @@
 import MySQLdb
 class shop():
-
+//TEst 2
     newCategoryList = []
     booktype = []
     
